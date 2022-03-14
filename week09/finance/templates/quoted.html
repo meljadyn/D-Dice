@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote Stock Prices
+{% endblock %}
+
+{% block main %}
+        <div class="container col-6 mx_auto">
+            <h2>{{ symbol["symbol"] }} Stock</h2>
+            <table class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Company</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ symbol["name"] }}</td>
+                        <td>{{ symbol["price"] | usd }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+{% endblock %}

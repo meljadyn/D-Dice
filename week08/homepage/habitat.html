@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+        <link href="https://icons.iconarchive.com/icons/thesquid.ink/free-flat-sample/1024/rubber-duck-icon.png" rel="icon">
+        <title>Rubber Ducks | Habitat</title>
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+
+                // Change backdrop to ocean
+                let habitat = document.querySelector('#habitat')
+                let ocean = document.querySelector('#ocean')
+                ocean.addEventListener('click', function() {
+                    habitat.style.backgroundImage = "url('ocean.jpg')";
+                    habitat.style.backgroundSize = "cover";
+                });
+
+                // Change backdrop to desk
+                let desk = document.querySelector('#desk')
+                desk.addEventListener('click', function() {
+                    habitat.style.backgroundImage = "url('desk.jpg')";
+                    habitat.style.backgroundSize = "cover";
+
+                });
+
+                // Change backdrop to moon
+                let moon = document.querySelector('#moon')
+                moon.addEventListener('click', function() {
+                    habitat.style.backgroundImage = "url('moon.jpg')";
+                    habitat.style.backgroundSize = "cover";
+                });
+
+                // Change backdrop to jungle
+                let jungle = document.querySelector('#jungle')
+                jungle.addEventListener('click', function() {
+                    habitat.style.backgroundImage = "url('jungle.jpg')";
+                    habitat.style.backgroundSize = "cover";
+                });
+                // Change button to red if incorrect
+                let incorrect = document.querySelectorAll('.incorrect');
+                for (let i = 0; i < incorrect.length; i++) {
+                    incorrect[i].addEventListener('click', function() {
+                        incorrect[i].style.backgroundColor = 'red';
+                        document.querySelector('#feedback1').innerHTML = "Incorrect";
+                    });
+                }
+
+                // Check free response answer
+                document.querySelector('#check').addEventListener('click', function() {
+                    let input = document.querySelector('input');
+                    if (input.value === 'Time') {
+                        input.style.backgroundColor = "green";
+                        document.querySelector("#feedback2").innerHTML = "Correct!";
+                    } else {
+                        input.style.backgroundColor = "red";
+                        document.querySelector("#feedback2").innerHTML = "Incorrect";
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <!-- Page header -->
+        <div class="container-fluid, p-3 bg-dark">
+            <h1 id="pageTitle">The Rubber Duck Database</h1>
+        </div>
+
+        <!-- Blue Line Break -->
+        <div class="container-fluid p-2 bg-info text-center" id="nav">
+            <a href="index.html" class="btn btn-block btn-light" role="button">Homepage</a>
+            <a href="appearance.html" class="btn btn-block btn-light" role="button">Appearance</a>
+            <a href="social.html" class="btn btn-block btn-light" role="button">Social Lives</a>
+        </div>
+        <br>
+
+
+        <!-- Header -->
+        <div class="container">
+            <div class="row">
+                <div class="col-8 p-3 rounded-3" id="splash">
+                    <h1 id="intro">Rubber ducks can live anywhere.</h1>
+                    <p>No, seriously. Anywhere. <s>Ever since their world domination</s> they've been known to live in forests, jungles, oceans, and on desks next to programmers.</p>
+
+                    <p>Anywhere humans can live, rubber ducks can too. But they can do one better. They could even live on the moon</p>
+                </div>
+                <div class="col-3 p-1 rounded-3 bg-info">
+                    <img src="https://i.cbc.ca/1.6175558.1631654815!/fileImage/httpImage/rubber-duck.jpg" class="img-fluid img-thumbnail" alt="rubber duck in a natural habitat">
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-5 p-5 rounded-3 bg-info" id="habitat">
+                    <img src="rubberduck.png" class="img-fluid" alt="rubber duck">
+                </div>
+                <div class="col-3 p-3 rounded-3">
+                    <h1>See for yourself!</h1>
+                    <p>Click around on the buttons to see the rubber duck in various natural habitats!</p>
+                    <button class="btn btn-info" id="ocean">Ocean</button>
+                    <button class="btn btn-info" id="desk">Desk</button>
+                    <br><br>
+                    <button class="btn btn-info" id="moon">Moon</button>
+                    <button class="btn btn-info" id="jungle">Jungle</button>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+    </body>
+    <footer id="footer">
+        Thanks for setting the duck free! He didn't like the blue box. | Mel Jadyn (c) 2022
+    </footer>
+</html>

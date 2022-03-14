@@ -1,0 +1,30 @@
+sort1 uses: bubble sort
+
+How do you know?: It is the slowest at reversed sort, which is one of bubble sort's weaknesses, as it requires n squared runthroughs to sort in that case. It also is very fast in sorting a pre sorted string, which is quick as this is its best case scenario (n), as it goes through once and then returns that it is finished.
+
+sort2 uses: merge sort
+
+How do you know?: It is consistently faster than sort3 (selection sort), but is consistent in speed regardless of whether it is handed a sorted or unsorted string. Unlike bubble sort, this sort method does not have an exit condition if it is handed a pre sorted string. It is only minorly faster at sorting random50000 compared to random5000, because this algorithm scales at in a log pattern rather than a more linear one.
+
+sort3 uses: selection sort
+
+How do you know?: It is significantly slower on average than sort2's method, and also is not faster or slower at sorting a random or pre-sorted string, as both require the same amount of steps. Selection sort is also significantly slower at random50000 than it is at random5000, because the algorithm scales poorly.
+
+
+
+notes:
+
+sort1 - sorted50000: 0.683
+sort2 - "":  0.695
+sort3 - "" 3.264
+
+sort1 - reversed 500000: 6.330s
+sort2 - "": 0.523
+sort3 - "" 3.263
+
+sort1 - random500000: 7.717
+sort2 - "" 0.545
+sort3 - "": 3.273
+
+sort2 - random5000 = 0.049
+sort3 - random5000 = 0.046

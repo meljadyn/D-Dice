@@ -1,0 +1,35 @@
+#pageTitle
+{
+    font-family: "Courier";
+    text-align: center;
+    color: #ffffff;
+}
+
+#intro
+{
+    font-family: "Verdana";
+    text-transform: uppercase;
+    color: #fcba03;
+    text-shadow: 2px 2px 2px #3d3d3d;
+}
+
+body
+{
+    background-color: #e8e8e8;
+}
+
+.nav
+{
+    text-align: center;
+}
+
+#appList
+{
+    color: white;
+}
+
+#footer
+{
+    background-color: #6ac8d9;
+    text-align: center;
+}
