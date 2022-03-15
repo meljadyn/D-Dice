@@ -4,7 +4,7 @@ from flask import Flask, redirect, render_template
 # Configure flask
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
     return render_template("/index.html")
 
