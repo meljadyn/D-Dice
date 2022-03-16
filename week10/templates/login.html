@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div class="flex flex-col justify-center items-center basis-1/2 p-3 text-secondary-content">
+        <div class="p-3"><h1 class="h1 prose-2xl"><b>Login</b></h1></div><br>
+        <div class="pb-1"><input type="text" placeholder="Username" name="username" label="username" class="input input-bordered input-primary w-full max-w-xs"></div><br>
+        <div class="pb-1"><input type="text" placeholder="Password" name="password" label="password" class="input input-bordered input-primary w-full max-w-xs"></div><br>
+        <div><button type="submit" class="btn btn-secondary">Login</button></div>
+    </div>
+{% endblock %}
