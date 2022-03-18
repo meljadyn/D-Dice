@@ -1,6 +1,7 @@
 module.exports = {
   content: ["../templates/*.html", "../index.html"],
   theme: {
+    darkMode: 'class',
     extend: {},
   },
   
@@ -10,8 +11,8 @@ module.exports = {
   ],
 
   daisyui: {
-    themes: ["cupcake", "dracula"],
+    themes: ["cupcake", "night"],
     styled: true,
-    darkTheme: "dracula",
+    darkTheme: "night",
   }
 }

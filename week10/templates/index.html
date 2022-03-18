@@ -4,29 +4,77 @@
 
 {% block main %}
 
-    <br><br>
-    <article class="prose">
-        
-                <!-- Character Sheet Section! -->
-        <div class="grid grid-cols-5 grid-rows-5 gap-20 pl-20 pt-9 pr-20 rounded-lg">
-            <div class="col-span-3 row-span-5 rounded-lg shadow-lg bg-primary p-10">
-                <h2>Character Sheet</h2>
+        <div class="grid grid-cols-5 grid-rows-2 md-grid-cols-1 gap-10 xl:gap-20 place-content-center pl-10 pr-10 xl:pl-28 xl:pr-28">
+            
+            <!-- Character Sheet Section! -->
+            <div class="col-span-5 lg:col-span-3 rounded-lg drop-shadow-xl bg-base-300 p-10">
+                <span class="prose">
+                    <h1>Character Sheet</h1>
+                </span>
             </div>
             
-                <!-- Dice Rolling Section! -->
-            <div class="col-span 2 row-span-4 rounded-lg shadow-md bg-primary p-10">
-                <h1>Dice Roller</h1>
-                <p>Press the buttons to roll your dice, or type in a custom command!</p>
-                    <button class="btn btn-square">d100</button>
-                    <button class="btn btn-square">d20</button>
-                    <button class="btn btn-square">d12</button>
-                    <button class="btn btn-square">d10</button>
-                    <button class="btn btn-square">d8</button>
-                    <button class="btn btn-square">d6</button>
-                    <button class="btn btn-square">d4</button>
-                    <button class="btn btn-square">d2</button>
+            <!-- Dice Rolling Section! -->
+            <div class="row-start-2 col-span-5 lg:row-start-1 lg:col-start-4 lg:col-span-2 row-span-4 rounded-lg drop-shadow-xl bg-base-300 p-10">
+                <span class="prose">
+                    <h1>Dice Roller</h1>
+                    <p>Press the buttons to build your roll, or type in a custom command!</p>
+                    <div class="place-content-center grid grid-cols-4 grid-rows-2 gap-1">
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d2</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d4</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d6</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d8</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d10</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d12</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d20</button>
+                        <button class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d100</button>
+                    </div>
+                    <div class="pt-5 pb-5">
+                        <div class="grid grid-cols-3">
+                            <div class="form-control col-span-2">
+                                <input type="text" name="dice-roll" placeholder="Dice Roll" label="dice roll" class="input input-bordered">
+                            </div>
+                            <div class="form-control">
+                                <input type="number" name="modifier" placeholder="Modifier" label="modifier" class="input input-bordered">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pl-20 pr-20">
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                            <span class="label-text">Advantage</span> 
+                            <input name=advantage type="checkbox" checked="checked" class="checkbox">
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                            <span class="label-text">Disadvantage</span> 
+                            <input name=disadvantage type="checkbox" checked="checked" class="checkbox">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-primary">Calculate</button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="table-normal rounded-xl border-2 border-secondary-content drop-shadow-lg border-dotted">
+                          <!-- head -->
+                          <thead class="bg-secondary-focus">
+                            <tr>
+                              <th class="w-3/4">Raw Rolls</th>
+                              <th>Total</th>
+                            </tr>
+                          </thead>
+                          <tbody class="rounded-xl bg-base-100" >
+                            <!-- row 1 -->
+                            <tr>
+                              <td>4 + 4 + 3</td>
+                              <td>12</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                </span>
             </div>
         </div>
-    </article>
 
 {% endblock %}

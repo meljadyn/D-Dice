@@ -1,19 +1,51 @@
 {% extends "layout.html" %}
 
-{% block title %}D&Dice | Register{% endblock %}
+{% block title %}D&Dice | Login{% endblock %}
 
 {% block main %}
-    <div class="flex flex-col justify-center items-center basis-1/2 p-3">
-        <div class="p-3"><h1 class="text-base-content h1 prose-2xl"><b>Register</b></h1></div><br>
-        <div class="pb-1"><input type="text" placeholder="Username" name="username" label="username" class="input-preset input input-bordered input-primary"></div><br>
-        <div class="pb-1"><input type="text" placeholder="Password" name="password" label="password" class="input-preset input input-bordered input-primary"></div><br>
-        <div class="pb-1"><input type="text" placeholder="Confirm password" name="confirmation" label="input-preset input input-bordered input-primary"></div><br>
-        <div><button type="submit" class="btn btn-secondary">Login</button></div>
-        <div class="alert alert-error shadow-lg">
-            <div>
-              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              <span>{{ error }}</span>
+    <!-- Trying different login page -->
+    <form action="/login" method="POST">
+        <div class="flex flex-col justify-center items-center">
+            <h1 class="text-5xl font-bold p-3">Login</h1><br>
+            <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-300">
+                <div class="card-body">
+                    <!-- Error message -->
+                    {% block content %}
+                        {% if error != "" %}
+                            <div class="alert alert-error shadow-lg">
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                                    <span>{{ error }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endblock %}
+
+                    <!-- boxes -->
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Username</span>
+                        </label>
+                        <input type="text" placeholder="username" name="username" class="input input-bordered"></input>
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Password</span>
+                        </label>
+                        <input type="text" placeholder="password" name="password" class="input input-bordered">
+                    </div>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Confirm password</span>
+                        </label>
+                        <input type="text"placeholder="Confirm password" name="confirmation" class="input input-bordered">
+                    </div>
+                    <div class="form-control mt-6">
+                        <button class="btn btn-primary">Login</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
+
 {% endblock %}
