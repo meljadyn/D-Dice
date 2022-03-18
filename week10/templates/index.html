@@ -1,12 +1,20 @@
 {% extends "layout.html" %}
 
+{% block title %}D&Dice{% endblock %}
+
 {% block main %}
 
     <br><br>
     <article class="prose">
+        
+                <!-- Character Sheet Section! -->
         <div class="grid grid-cols-5 grid-rows-5 gap-20 pl-20 pt-9 pr-20 rounded-lg">
-            <div class="col-span-3 row-span-5 rounded-lg shadow-lg bg-secondary p-10">Character Sheet</div>
-            <div class="row-span-4 rounded-lg shadow-md bg-secondary p-10">
+            <div class="col-span-3 row-span-5 rounded-lg shadow-lg bg-primary p-10">
+                <h2>Character Sheet</h2>
+            </div>
+            
+                <!-- Dice Rolling Section! -->
+            <div class="col-span 2 row-span-4 rounded-lg shadow-md bg-primary p-10">
                 <h1>Dice Roller</h1>
                 <p>Press the buttons to roll your dice, or type in a custom command!</p>
                     <button class="btn btn-square">d100</button>
