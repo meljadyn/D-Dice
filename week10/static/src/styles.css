@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer {
+    .input-preset {
+        @apply text-secondary-content w-full max-w-xs
+    }
+}

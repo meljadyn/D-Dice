@@ -1,10 +1,24 @@
 {% extends "layout.html" %}
 
 {% block main %}
+
     <br><br>
-    <div class="rounded-lg basis-4/5">
-        <button class="inline-block cursor-pointer rounded-md bg-gray-800 px-4 py-3 text-center text-sm font-semibold uppercase text-white transition duration-200 ease-in-out hover:bg-gray-900">OG Button</button>
-        <button class="btn">Daisy Button</button>
-    </div>
+    <article class="prose">
+        <div class="grid grid-cols-5 grid-rows-5 gap-20 pl-20 pt-9 pr-20 rounded-lg">
+            <div class="col-span-3 row-span-5 rounded-lg shadow-lg bg-secondary p-10">Character Sheet</div>
+            <div class="row-span-4 rounded-lg shadow-md bg-secondary p-10">
+                <h1>Dice Roller</h1>
+                <p>Press the buttons to roll your dice, or type in a custom command!</p>
+                    <button class="btn btn-square">d100</button>
+                    <button class="btn btn-square">d20</button>
+                    <button class="btn btn-square">d12</button>
+                    <button class="btn btn-square">d10</button>
+                    <button class="btn btn-square">d8</button>
+                    <button class="btn btn-square">d6</button>
+                    <button class="btn btn-square">d4</button>
+                    <button class="btn btn-square">d2</button>
+            </div>
+        </div>
+    </article>
 
 {% endblock %}
