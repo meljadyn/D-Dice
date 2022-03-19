@@ -20,10 +20,13 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 @app.route("/", methods=["GET", "POST"])
 def index():
     theme = "light"
+    quick_error=""
+    custom_error=""
+
     if request.args.get("darkmode") != None:
         theme = "dark"
 
-    return render_template("/index.html", theme=theme)
+    return render_template("/index.html", theme=theme, quick_error="", custom_error="")
 
 
 @app.route("/login", methods=["GET", "POST"])
