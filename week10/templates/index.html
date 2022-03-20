@@ -3,6 +3,7 @@
 {% block title %}D&Dice{% endblock %}
 
 {% block main %}
+
     <div class="grid grid-cols-5 grid-rows-2 gap-10 place-content-center pl-10 pr-10 xl:pl-44 xl:pr-44">
         
         <!-- Custom Rolls Section! -->
@@ -41,24 +42,52 @@
                     </div>
                 </div>
                 <div class="divider"></div> 
-
-                <!-- CUSTOM ROLL TABLES -->
             </span>
         </div>
+
+        <!-- Script to fill in the input with modifier commands -->
+        <script>
+            function button_input(dice_name) {
+                let input = document.getElementById('dice-roll');
+                let position = input.value.search("d"+dice_name);
+                if (position == -1)
+                {
+                    if (input.value == null | input.value == "") {
+                        input.value = "1d" + dice_name;
+                    }
+                    else {
+                        input.value += "+1d" + dice_name;
+                    }
+                }
+                else {
+                    let num = input.value.charAt(position - 1);
+                    if (Number.isInteger(input.value.charAt(position - 2))) {
+                        oldValue = toString(input.value.charAt(position-2)) + toString(num);
+                    }
+                    else {
+                        oldValue = num;
+                    }
+                    oldinput = input.value;
+                    newDice = toString(oldValue) + "d" + toString(dice_name);
+                    input.value = oldinput.replace(newDice, "haha");
+                }
+            }
+        </script>
+        
         <!-- Dice Rolling Section! -->
         <div class="row-start-2 col-start-1 col-span-5 lg:row-start-1 lg:col-span-2 lg:col-start-4 rounded-lg drop-shadow-xl bg-base-300 p-10">
             <span class="prose">
                 <h1 class="text-center">Quick Roller</h1>
                 <p class="text-justify">For rolls you need once and never again! Press the buttons to build your roll or type in a custom command!</p>
                 <div class="place-content-center grid grid-cols-4 grid-rows-2 gap-1">
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d2</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d4</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d6</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d8</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d10</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d12</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d20</button>
-                    <button onClick="button_input(this.value)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d100</button>
+                    <button onClick="button_input(2)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d2</button>
+                    <button onClick="button_input(4)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d4</button>
+                    <button onClick="button_input(6)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d6</button>
+                    <button onClick="button_input(8)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d8</button>
+                    <button onClick="button_input(10)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d10</button>
+                    <button onClick="button_input(12)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d12</button>
+                    <button onClick="button_input(20)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d20</button>
+                    <button onClick="button_input(100)" class="btn btn-lg btn-square bg-secondary-focus btn-secondary border-dotted border-secondary-content border-2">d100</button>
                 </div>
                 <!-- ERROR MESSAGE -->
                 {% block error2 %}
@@ -118,7 +147,5 @@
             </span>
         </div>
     </div>
-
-    <script src="../templates/scripts.js"></script>
 
 {% endblock %}
