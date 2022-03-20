@@ -49,27 +49,25 @@
         <script>
             function button_input(dice_name) {
                 let input = document.getElementById('dice-roll');
-                let position = input.value.search("d"+dice_name);
-                if (position == -1)
+                let position = input.value.search("d"+dice_name); // search for the position of the dice in question
+                if (position == -1) // if the die has not yet been entered
                 {
-                    if (input.value == null | input.value == "") {
+                    if (input.value == null | input.value == "") { // if this is the first input
                         input.value = "1d" + dice_name;
                     }
-                    else {
+                    else { // if this is a proceeding input
                         input.value += "+1d" + dice_name;
                     }
                 }
                 else {
-                    let num = input.value.charAt(position - 1);
-                    if (Number.isInteger(input.value.charAt(position - 2))) {
-                        oldValue = toString(input.value.charAt(position-2)) + toString(num);
+                    let num = input.value.charAt(position - 2) + input.value.charAt(position - 1);
+                    num = parseInt(num);
+                    if (num >= 10) {
+                        input.value = input.value.substring(0, position - 2) + (num + 1) + input.value.substring(position, input.value.length);
                     }
                     else {
-                        oldValue = num;
+                        input.value = input.value.substring(0, (position - 1)) + (num + 1) + input.value.substring(position, input.value.length);
                     }
-                    oldinput = input.value;
-                    newDice = toString(oldValue) + "d" + toString(dice_name);
-                    input.value = oldinput.replace(newDice, "haha");
                 }
             }
         </script>
