@@ -14,7 +14,7 @@
                 <!-- ERROR MESSAGE PROMPT -->
                 {% block error1 %}
                     {% if custom_error != "" %}
-                        <div class="alert alert-error shadow-lg">
+                        <div class="alert shadow-lg">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 <span>{{ custom_error }}</span>
@@ -24,23 +24,25 @@
                 {% endblock %}
                 
                 <!-- INPUT FORMS -->
-                <div class="grid grid-cols-4 grid-rows-2 gap-5 justify-center items-center pb-0 h-min">
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text">Roll Name</span>
-                        </label>
-                        <input type="text" placeholder="(ex. axe attack)" name="custom-name" label="custom-roll" class="input input-bordered"></input>
+                <form action="/" method="POST">
+                    <div class="grid grid-cols-4 grid-rows-2 gap-5 justify-center items-center pb-0 h-min">
+                        <div class="form-control col-span-2">
+                            <label class="label">
+                                <span class="label-text">Roll Name</span>
+                            </label>
+                            <input type="text" placeholder="(ex. axe attack)" name="custom-name" label="custom-roll" class="input input-bordered"></input>
+                        </div>
+                        <div class="form-control col-span-2">
+                            <label class="label">
+                                <span class="label-text">Dice Roll</span>
+                            </label>
+                            <input type="text" placeholder="(ex. 1d4+3d6+3)" name="custom-roll" label="custom-roll" class="input input-bordered">
+                        </div>
+                        <div class="form-control row-start-2 col-span-4">
+                            <button type="submit" name="build-roll" class="btn btn-primary">Build Roll</button>
+                        </div>
                     </div>
-                    <div class="form-control col-span-2">
-                        <label class="label">
-                            <span class="label-text">Dice Roll</span>
-                        </label>
-                        <input type="text" placeholder="(ex. 1d4+3d6+3)" name="custom-roll" label="custom-roll" class="input input-bordered">
-                    </div>
-                    <div class="form-control row-start-2 col-span-4">
-                        <button class="btn btn-primary">Build Roll</button>
-                    </div>
-                </div>
+                </form>
                 <div class="divider"></div> 
             </span>
         </div>
@@ -60,12 +62,12 @@
                     }
                 }
                 else {
-                    let num = input.value.charAt(position - 2) + input.value.charAt(position - 1);
-                    num = parseInt(num);
-                    if (num >= 10) {
+                    let num = input.value.charAt(position - 2) + input.value.charAt(position - 1); // grabs two digits
+                    num = parseInt(num); // abandons the + sign if there is one
+                    if (num >= 10) { // if num IS two digits
                         input.value = input.value.substring(0, position - 2) + (num + 1) + input.value.substring(position, input.value.length);
                     }
-                    else {
+                    else { // if num is 1 digit
                         input.value = input.value.substring(0, (position - 1)) + (num + 1) + input.value.substring(position, input.value.length);
                     }
                 }
@@ -90,7 +92,8 @@
                 <!-- ERROR MESSAGE -->
                 {% block error2 %}
                     {% if quick_error != "" %}
-                        <div class="alert alert-error shadow-lg">
+                        <br>
+                        <div class="alert shadow-lg">
                             <div>
                                 <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                                 <span>{{ quick_error }}</span>
@@ -100,28 +103,30 @@
                 {% endblock %}
                 
                 <!-- Input boxes -->
-                <div class="pt-5 pb-5">
-                    <div class="form-control col-span-2">
-                        <input id="dice-roll" type="text" name="dice-roll" placeholder="Dice Roll (ex. 1d4+3d6+3)" label="dice roll" class="input input-bordered">
+                <form action="/" method="POST">
+                    <div class="pt-5 pb-5">
+                        <div class="form-control col-span-2">
+                            <input id="dice-roll" type="text" name="dice-roll" placeholder="Dice Roll (ex. 1d4+3d6+3)" label="dice roll" class="input input-bordered">
+                        </div>
                     </div>
-                </div>
-                <div class="pl-20 pr-20">
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                        <span class="label-text">Advantage</span> 
-                        <input name=advantage type="checkbox" class="checkbox">
-                        </label>
+                    <div class="pl-20 pr-20">
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                            <span class="label-text">Advantage</span> 
+                            <input name=advantage type="checkbox" class="checkbox">
+                            </label>
+                        </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                            <span class="label-text">Disadvantage</span> 
+                            <input name=disadvantage type="checkbox" class="checkbox">
+                            </label>
+                        </div>
                     </div>
-                    <div class="form-control">
-                        <label class="label cursor-pointer">
-                        <span class="label-text">Disadvantage</span> 
-                        <input name=disadvantage type="checkbox" class="checkbox">
-                        </label>
+                    <div class="form-control mt-6">
+                        <button type="submit" name="calculate" class="btn btn-primary">Calculate</button>
                     </div>
-                </div>
-                <div class="form-control mt-6">
-                    <button class="btn btn-primary">Calculate</button>
-                </div>
+                </form>
 
                 <!-- TABLE -->
                 <div class="overflow-x-auto">

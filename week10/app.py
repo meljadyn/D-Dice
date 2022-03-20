@@ -19,14 +19,19 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    theme = "light"
     quick_error=""
     custom_error=""
+    if "build-roll" in request.form:
+        if not request.args.get('custom-name'):
+            return render_template("/index.html", quick_error="", custom_error="Must include roll name.")
+        if not request.args.get('custom-roll'):
+            return render_template("/index.html", quick_error="", custom_error="Must include custom roll.")
 
-    if request.args.get("darkmode") != None:
-        theme = "dark"
-
-    return render_template("/index.html", theme=theme, quick_error="", custom_error="")
+    if "calculate" in request.form:
+        if not request.args.get('dice-roll'):
+            return render_template("/index.html", quick_error="Must include dice roll", custom_error="")
+    
+    return render_template("/index.html", quick_error="", custom_error="")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -42,6 +47,7 @@ def login():
     else:
         # If username/password was not submitted
         if not request.form.get("username"):
+            error = "You must provide a username."
             return render_template("/login.html", error="You must provide a username.")
         if not request.form.get("password"):
             return render_template("/login.html", error="You must provide a password")
@@ -49,12 +55,14 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("/register.html")
+    error = ""
+    return render_template("/register.html", error=error)
 
 
 @app.route("/security", methods=["GET", "POST"])
 def security():
     return render_template("/security.html")
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
