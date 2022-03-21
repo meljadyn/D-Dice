@@ -112,14 +112,20 @@
                     <div class="pl-20 pr-20">
                         <div class="form-control">
                             <label class="label cursor-pointer">
-                            <span class="label-text">Advantage</span> 
-                            <input name=advantage type="checkbox" class="checkbox">
+                                <span class="label-text">Advantage</span> 
+                                <input type="radio" name="advantage-check" class="radio checked:bg-secondary">
                             </label>
                         </div>
                         <div class="form-control">
                             <label class="label cursor-pointer">
-                            <span class="label-text">Disadvantage</span> 
-                            <input name=disadvantage type="checkbox" class="checkbox">
+                                <span class="label-text">Disadvantage</span> 
+                                <input type="radio" name="advantage-check" class="radio checked:bg-secondary">
+                            </label>
+                          </div>
+                        <div class="form-control">
+                            <label class="label cursor-pointer">
+                                <span class="label-text">None</span> 
+                                <input type="radio" name="advantage-check" class="radio checked:bg-secondary" checked>
                             </label>
                         </div>
                     </div>
@@ -141,7 +147,9 @@
                         <tbody class="rounded-xl bg-base-100" >
                             <!-- row 1 -->
                             <tr>
-                            <td>4 + 4 + 3</td>
+                            <td>
+                                {{ raw }}
+                            </td>
                             <td>12</td>
                             </tr>
                         </tbody>

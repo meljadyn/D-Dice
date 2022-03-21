@@ -1,8 +1,10 @@
 
+import rlcompleter
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from cs50 import SQL
 import re
+from random import randint
 
 # Configure flask
 app = Flask(__name__)
@@ -48,15 +50,22 @@ def index():
 
             # Format dice roll into list of lists
             try:
-                roll = format_roll(roll)
+                formatted_roll = format_roll(roll)
             except:
                 return render_template("/index.html", quick_error="Invalid formatting.", custom_error="")
             
             if "invalid" in roll:
                 return render_template("/index.html", quick_error="Invalid formatting.", custom_error="")
             
-            return render_template("/index.html", quick_error="all is well", custom_error="")
-        
+            # Evaluate the rolls
+            raw_rolls = raw_roll(formatted_roll)
+
+            # Format raw roll for printing
+            formatted_raw = format_raw(raw_rolls)
+
+            quick_error = (f"rolls: {formatted_raw}")
+            return render_template("/index.html", quick_error=quick_error, custom_error="", raw=formatted_raw)
+                    
     else:
         return render_template("/index.html", quick_error="", custom_error="")
 
@@ -89,9 +98,11 @@ def register():
 def security():
     return render_template("/security.html")
 
+
 # Formats plain string of roll info into a list of lists (i.e. "1d4+12d6-3" is now [['+', '1', 'd', '4'], ['+', '12', 'd', '6'], ['-', '3']])
 def format_roll(roll):
-    roll = roll.strip()
+    
+    # Remove trailing operators
     roll = roll.rstrip('+')
     roll = roll.rstrip('-')
 
@@ -140,6 +151,52 @@ def format_roll(roll):
             return "invalid unknown"
 
     return final
+
+
+def raw_roll(formattedRoll):
+    roll = formattedRoll
+
+    raw_rolls = []
+    for i in range(len(roll)):
+
+        # If a die needs to be rolled
+        if len(roll[i]) == 4:
+            operator = roll[i][0]
+            n = int(roll[i][1])
+            dice = int(roll[i][3])
+            
+            rolls = []
+            for j in range(n):
+                if operator == "-":
+                    rolls.append("-" + str(randint(1, dice))) # add - when it appears
+                else:
+                    rolls.append(str(randint(1, dice)))
+                
+            raw_rolls.append(rolls)
+
+        # If it's just a number
+        if len(roll[i]) == 2:
+            operator= roll[i][0]
+            n = roll[i][1]
+            raw_rolls.append(operator + n)
+
+    return raw_rolls
+
+
+def format_raw(rawRolls):
+    rolls = rawRolls
+    formatted = ""  
+    
+    for i in range(len(rolls)):
+        if "-" in rolls[i]:
+            formatted += rolls[i] + " "
+        else:
+            format = "+".join(rolls[i])
+            formatted += format + " "
+        
+    formatted = formatted.strip()
+    formatted = formatted.replace("++", "+")
+    formatted = formatted.replace(" ", ", ")
 
 
 if __name__ == '__main__':
