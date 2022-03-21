@@ -15,24 +15,43 @@ Session(app)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Configure SQL database
-#db = SQL("sqlite:///project.db")
+db = SQL("sqlite:///dndice.db")
 
+# Homepage
 @app.route("/", methods=["GET", "POST"])
 def index():
     quick_error=""
     custom_error=""
     if "build-roll" in request.form:
-        if not request.args.get('custom-name'):
+        if not request.form.get('custom-name'):
             return render_template("/index.html", quick_error="", custom_error="Must include roll name.")
-        if not request.args.get('custom-roll'):
+        if not request.form.get('custom-roll'):
             return render_template("/index.html", quick_error="", custom_error="Must include custom roll.")
 
     if "calculate" in request.form:
-        if not request.args.get('dice-roll'):
+        # check for a result
+        if not request.form.get('dice-roll'):
             return render_template("/index.html", quick_error="Must include dice roll", custom_error="")
-    
-    return render_template("/index.html", quick_error="", custom_error="")
+        
+        # remove all spaces and makes it lower case
+        roll = request.form.get('dice-roll')
+        roll = roll.replace(' ', '')
+        roll = roll.lower()
 
+        # check for valid characters
+        for i in range(len(roll)):
+            if not roll[i].isdecimal():
+                if roll[i] != "+" and roll[i] != "-" and roll[i] != "d":
+                    return render_template("/index.html", quick_error="Must only include the following characters: 0-9, d, +, -", custom_error="")
+
+        # split roll into chunks separated by +
+        dice = roll.split("+")
+        
+        for i in range(len(dice)):
+            if "-" in dice[i]:
+                ### remove the - section and put it somewhere else
+                print("hi")
+        
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
