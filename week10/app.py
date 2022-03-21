@@ -33,41 +33,30 @@ def index():
                 return render_template("/index.html", quick_error="", custom_error="Must include custom roll.")
 
         if "calculate" in request.form:
-            # check for a result
+            # Check for input
             if not request.form.get('dice-roll'):
                 return render_template("/index.html", quick_error="Must include dice roll", custom_error="")
             
-            # remove all spaces, makes it lower case, remove any + or - at the beginning or end
+            # Solve roll
             roll = request.form.get('dice-roll')
-            roll = roll.replace(' ', '')
-            roll = roll.lower()
-
-            # check for valid characters
-            for i in range(len(roll)):
-                if not roll[i].isdecimal():
-                    if roll[i] != "+" and roll[i] != "-" and roll[i] != "d":
-                        return render_template("/index.html", quick_error="Must only include the following characters: 0-9, d, +, -", custom_error="")
-
-            # Format dice roll into list of lists
-            try:
-                formatted_roll = format_roll(roll)
-            except:
-                return render_template("/index.html", quick_error="Invalid formatting.", custom_error="")
+            solved = solve_roll(roll)
             
-            if "invalid" in roll:
-                return render_template("/index.html", quick_error="Invalid formatting.", custom_error="")
+            # Check for error codes
+            if "Invalid" in solved:
+                if "Characters" in solved:
+                    return render_template("/index.html", quick_error="Must only include the following characters: 0-9, d, +, -", custom_error="")
+                if "Format" in solved:
+                    return render_template("/index.html", quick_error="Invalid formatting.", custom_error="")
             
-            # Evaluate the rolls
-            raw_rolls = raw_roll(formatted_roll)
-
-            # Format raw roll for printing
-            formatted_raw = format_raw(raw_rolls)
-
-            quick_error = (f"rolls: {formatted_raw}")
-            return render_template("/index.html", quick_error=quick_error, custom_error="", raw=formatted_raw)
+            return render_template("/index.html", quick_error=quick_error, custom_error="", solved=solved)
                     
     else:
-        return render_template("/index.html", quick_error="", custom_error="")
+        solved = {
+            "raw": "",
+            "total": ""
+        }
+        
+        return render_template("/index.html", quick_error="", custom_error="", solved="")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -97,6 +86,43 @@ def register():
 @app.route("/security", methods=["GET", "POST"])
 def security():
     return render_template("/security.html")
+
+
+def solve_roll(roll):
+    roll = roll.replace(' ', '')
+    roll = roll.lower()
+
+    # check for valid characters
+    for i in range(len(roll)):
+        if not roll[i].isdecimal():
+            if roll[i] != "+" and roll[i] != "-" and roll[i] != "d":
+                return "Invalid: Characters"
+
+    # Format dice roll into list of lists
+    try:
+        formatted_roll = format_roll(roll)
+    except:
+        return "Invalid: Formatting"
+    
+    if "invalid" in roll:
+        return "Invalid: Formatting"
+        
+    # Evaluate the rolls
+    raw_rolls = raw_roll(formatted_roll)
+
+    # Format raw roll for printing
+    formatted_raw = format_raw(raw_rolls)
+
+    # Find total
+    sum = find_sum(formatted_raw)
+
+    # Make dictionary to return to main function
+    roll_answers = {
+        "raw": formatted_raw,
+        "total": sum
+    }
+
+    return roll_answers
 
 
 # Formats plain string of roll info into a list of lists (i.e. "1d4+12d6-3" is now [['+', '1', 'd', '4'], ['+', '12', 'd', '6'], ['-', '3']])
@@ -186,7 +212,7 @@ def raw_roll(formattedRoll):
 def format_raw(rawRolls):
     rolls = rawRolls
     formatted = ""  
-    
+
     for i in range(len(rolls)):
         if "-" in rolls[i]:
             formatted += rolls[i] + " "
@@ -196,8 +222,21 @@ def format_raw(rawRolls):
         
     formatted = formatted.strip()
     formatted = formatted.replace("++", "+")
+    formatted = formatted.replace("+-", "-")
     formatted = formatted.replace(" ", ", ")
 
+    return formatted
+
+
+def find_sum(formattedRoll):
+    formatted = formattedRoll
+    sum_format = formatted.replace(', ', '+')
+    sum_format = sum_format.replace('++', '+')
+    sum_format = sum_format.replace('+-', '-')
+
+    sum = eval(sum_format)
+
+    return sum
 
 if __name__ == '__main__':
 	app.run(debug=True)

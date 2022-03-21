@@ -105,31 +105,11 @@
                 <!-- Input boxes -->
                 <form action="/" method="POST">
                     <div class="pt-5 pb-5">
-                        <div class="form-control col-span-2">
+                        <div class="form-control col-span-2 mt-6">
                             <input id="dice-roll" type="text" name="dice-roll" placeholder="Dice Roll (ex. 1d4+3d6+3)" label="dice roll" class="input input-bordered">
                         </div>
                     </div>
-                    <div class="pl-20 pr-20">
-                        <div class="form-control">
-                            <label class="label cursor-pointer">
-                                <span class="label-text">Advantage</span> 
-                                <input type="radio" name="advantage-check" class="radio checked:bg-secondary">
-                            </label>
-                        </div>
-                        <div class="form-control">
-                            <label class="label cursor-pointer">
-                                <span class="label-text">Disadvantage</span> 
-                                <input type="radio" name="advantage-check" class="radio checked:bg-secondary">
-                            </label>
-                          </div>
-                        <div class="form-control">
-                            <label class="label cursor-pointer">
-                                <span class="label-text">None</span> 
-                                <input type="radio" name="advantage-check" class="radio checked:bg-secondary" checked>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-control mt-6">
+                    <div class="form-control">
                         <button type="submit" name="calculate" class="btn btn-primary">Calculate</button>
                     </div>
                 </form>
@@ -148,9 +128,9 @@
                             <!-- row 1 -->
                             <tr>
                             <td>
-                                {{ raw }}
+                                {{ solved["raw"] }}
                             </td>
-                            <td>12</td>
+                            <td>{{ solved["total"] }}</td>
                             </tr>
                         </tbody>
                     </table>
