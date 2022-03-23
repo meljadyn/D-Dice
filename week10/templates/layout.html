@@ -16,8 +16,13 @@
               <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
             </label>
             <!-- dropdown for mobile -->
-            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-20 text-base-content">
-              <li class="text-center"><a href="/login">Login</a></li>
+            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-24 text-base-content text-center">
+              {% if username is not defined %}
+                <li class="text-center"><a href="/login">Login</a></li>
+              {% endif %}
+              {% if username is defined %}
+                <li class="text-center"><a href="/login">Logout</a></li>
+              {% endif %}
               <li>
                 <label class="swap swap-rotate">
                   <!-- this hidden checkbox controls the state -->
@@ -32,12 +37,22 @@
           </div>
           <div class="pl-3">
             <a class="btn btn-secondary normal-case text-xl dark:text-gray-50" href="/">D&Dice</a>
+            {% if username is defined %}
+            <div class="pl-8 text-base-content">
+                [ logged in as <span class="text-secondary-focus">{{ username }}</span> ]
+            </div>
+            {% endif %}
           </div>
         </div>
         <!-- Navbar for desktop -->
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal space-x-4 flex justify-end place-content-end">
-            <li class="bg-secondary rounded-xl"><a href="/login">Login</a></li>
+            {% if username is not defined %}
+              <li class="bg-secondary rounded-xl"><a href="/login">Login</a></li>
+            {% endif %}
+            {% if username is defined %}
+              <li class="bg-secondary rounded-xl"><a href="/login">Sign Out</a></li>
+            {% endif %}
             <li class="bg-secondary-focus rounded-xl">
               <label class="swap swap-rotate">
                 <!-- this hidden checkbox controls the state -->

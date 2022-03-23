@@ -40,13 +40,13 @@ def index():
         if "build-roll" in request.form:
             # If the user is not logged in
             if not session.get("user_id"):
-                return render_template("/index.html", custom_error="You must be logged in to use this function.")
+                return render_template("/index.html", custom_error="You must be logged in to use this function.", username=username)
 
             # Ensure that name and roll are defined
             if not request.form.get('custom-name'):
-                return render_template("/index.html", custom_error="Must include roll name.", macros=macros)
+                return render_template("/index.html", custom_error="Must include roll name.", macros=macros, username=username)
             if not request.form.get('custom-roll'):
-                return render_template("/index.html", custom_error="Must include custom roll.", macros=macros)
+                return render_template("/index.html", custom_error="Must include custom roll.", macros=macros, username=username)
             
             # Define variables
             custom_name = request.form.get('custom-name')
@@ -56,9 +56,9 @@ def index():
             test = solve_roll(custom_roll)
             if "Invalid" in test:
                 if "Characters" in test:
-                    return render_template("/index.html", custom_error="Must only include the following characters: 0-9, d, +, -", macros=macros)
+                    return render_template("/index.html", custom_error="Must only include the following characters: 0-9, d, +, -", macros=macros, username=username)
                 if "Format" in test:
-                    return render_template("/index.html", custom_error="Invalid formatting.", macros=macros)
+                    return render_template("/index.html", custom_error="Invalid formatting.", macros=macros, username=username)
 
             # Insert roll into database
             db.execute("INSERT INTO rolls (username, roll_name, roll_text) VALUES(?, ?, ?)", username, custom_name, custom_roll)
@@ -76,7 +76,7 @@ def index():
 
             # Check for input
             if not request.form.get('dice-roll'):
-                return render_template("/index.html", quick_error="Must include dice roll", custom_error=custom_error, macros=macros)
+                return render_template("/index.html", quick_error="Must include dice roll", custom_error=custom_error, macros=macros, username=username)
             
             # Solve roll
             roll = request.form.get('dice-roll')
@@ -85,11 +85,11 @@ def index():
             # Check for error codes
             if "Invalid" in solved:
                 if "Characters" in solved:
-                    return render_template("/index.html", quick_error="Must only include the following characters: 0-9, d, +, -", custom_error="", macros=macros)
+                    return render_template("/index.html", quick_error="Must only include the following characters: 0-9, d, +, -", custom_error="", macros=macros, username=username)
                 if "Format" in solved:
-                    return render_template("/index.html", quick_error="Invalid formatting.", custom_error=custom_error, macros=macros)
+                    return render_template("/index.html", quick_error="Invalid formatting.", custom_error=custom_error, macros=macros, username=username)
             
-            return render_template("/index.html", custom_error=custom_error, solved=solved, macros=macros)
+            return render_template("/index.html", custom_error=custom_error, solved=solved, macros=macros, username=username)
 
         # Rolling from the macro chart
         if "roll-it" in request.form:
@@ -101,11 +101,11 @@ def index():
             rolled = solve_roll(roll_text)
             if "Invalid" in rolled:
                 if "Characters" in rolled:
-                    return render_template("/index.html", custom_error="Must only include the following characters: 0-9, d, +, -", macros=macros)
+                    return render_template("/index.html", custom_error="Must only include the following characters: 0-9, d, +, -", macros=macros, username=username)
                 if "Format" in rolled:
-                    return render_template("/index.html", custom_error="Invalid formatting.", macros=macros)
+                    return render_template("/index.html", custom_error="Invalid formatting.", macros=macros, username=username)
 
-            return render_template("/index.html", custom_error="", rolled=rolled, macros=macros)
+            return render_template("/index.html", custom_error="", rolled=rolled, macros=macros, username=username)
         
         if "delete-it" in request.form:
             id = request.form.get("id")
@@ -117,9 +117,9 @@ def index():
     else:
         # If the user is not logged in
         if not session.get("user_id"):
-            return render_template("/index.html", custom_error="You must be logged in to save custom dice roll macros.")
+            return render_template("/index.html", custom_error="You must be logged in to save custom dice roll macros.", username=username)
         
-        return render_template("/index.html", custom_error="", macros=macros)
+        return render_template("/index.html", custom_error="", macros=macros, username=username)
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -226,7 +226,10 @@ def solve_roll(roll):
     formatted_raw = format_raw(raw_rolls)
 
     # Find total
-    sum = find_sum(formatted_raw)
+    try:
+        sum = find_sum(formatted_raw)
+    except:
+        return "Invalid: Formatting"
 
     # Make dictionary to return to main function
     roll_answers = {
@@ -286,8 +289,8 @@ def format_roll(roll):
 
     for i in final:
         if len(i) != 4 and len(i) != 2:
-            return "invalid unknown"
-
+            return "invalid, unknown"
+            
     return final
 
 
