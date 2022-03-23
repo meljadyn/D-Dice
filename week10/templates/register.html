@@ -4,9 +4,9 @@
 
 {% block main %}
     <!-- Trying different login page -->
-    <form action="/login" method="POST">
+    <form action="/register" method="POST">
         <div class="flex flex-col justify-center items-center">
-            <h1 class="text-5xl font-bold p-3">Login</h1><br>
+            <h1 class="text-5xl font-bold p-3">Register</h1><br>
             <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-300">
                 <div class="card-body">
                     <!-- Error message -->
@@ -32,16 +32,20 @@
                         <label class="label">
                             <span class="label-text">Password</span>
                         </label>
-                        <input type="text" placeholder="password" name="password" class="input input-bordered">
+                        <input type="password" placeholder="password" name="password" class="input input-bordered">
                     </div>
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Confirm password</span>
                         </label>
-                        <input type="text"placeholder="Confirm password" name="confirmation" class="input input-bordered">
+                        <input type="password" placeholder="Confirm password" name="confirmation" class="input input-bordered">
                     </div>
+                    <label class="label">
+                        Already have an account?
+                        <a href="/login" class="link link-hover text-primary-focus">Login here.</a>
+                    </label>
                     <div class="form-control mt-6">
-                        <button class="btn btn-primary">Login</button>
+                        <button class="btn btn-primary">Register</button>
                     </div>
                 </div>
             </div>
