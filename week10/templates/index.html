@@ -20,6 +20,7 @@
                                 <span>{{ custom_error }}</span>
                             </div>
                         </div>
+                        <br>
                     {% endif %}
                 {% endblock %}
                 
@@ -51,9 +52,33 @@
                         </form>
                     </div>
                 </div>
-                <!-- TABLE -->
                 <div class="divider"></div> 
                 
+                <!-- SOLVED TABLE -->
+                {% if rolled is defined %}
+                    <div class="overflow-x-auto">
+                        <table class="table-normal rounded-xl border-2 border-secondary-content drop-shadow-lg border-dotted">
+                            <!-- head -->
+                            <thead class="bg-secondary-focus">
+                                <tr>
+                                <th class="w-3/4">Raw Rolls</th>
+                                <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rounded-xl bg-base-100" >
+                                <!-- row 1 -->
+                                <tr>
+                                    <td>{{ rolled["raw"] }}</td>
+                                    <td>{{ rolled["total"] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
+
+
+                <!-- TABLE -->
+                {% if macros["roll_name"] is defined %}
                 <div class="overflow-x-auto">
                     <table class="table-normal rounded-xl border-2 border-secondary-content drop-shadow-lg border-dotted">
                         <!-- head -->
@@ -65,26 +90,33 @@
                                 <th class="w-1/6"></th>
                             </tr>
                         </thead>
-                        <tbody class="rounded-xl bg-base-100" >
+                        <tbody class="rounded-xl bg-base-100 align-top p-0" >
                             <!-- row 1 -->
                             {% for macros in macros %}
-                            <tr>
-                                <td>{{ macros["roll_name"] }}</td>
-                                <td>{{ macros["roll_text"] }}</td>
-                                <form action="/" method="POST">
-                                    <td><button class="btn btn-primary" type="submit" name="roll-it">Roll</button></td>
-                                    <td>
-                                        <button class="btn btn-primary" type="submit" name="delete-it">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
-                                        </button>
-                                    </td>
-                                    <input type="hidden" value="{{ macros[id] }} name="id" />
-                                </form>
-                            </tr>
+                                <tr>
+                                    <td>{{ macros["roll_name"] }}</td>
+                                    <td>{{ macros["roll_text"] }}</td>
+                                    <form action="/" method="POST">
+                                        <td><button class="btn btn-primary" type="submit" name="roll-it">Roll</button></td>
+                                        <td>
+                                            <button class="btn btn-primary" type="submit" name="delete-it">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
+                                            </button>
+                                        </td>
+                                        <input type="hidden" value="{{ macros["id"] }}" name="id" />
+                                    </form>
+                                </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
+                {% endif %}
+                {% if macros["roll_name"] is not defined %}
+                <div class="w-3/4 bg-base-100 rounded-xl drop-shadow-md p-10">
+                    <h3>Why use custom macros?</h3>
+                    <p>Think of all stat rolls and weapon rolls that you run dozens of times a game. Why manually type in your dexterity check again? We both know the DM will ask. Instead, set a custom roll, and roll it with one click! After all, why should we expend any effort if it's avoidable?</p>
+                </div>
+                {% endif %}
             </span>
         </div>
 
@@ -132,7 +164,7 @@
                 </div>
                 <!-- ERROR MESSAGE -->
                 {% block error2 %}
-                    {% if quick_error != "" %}
+                    {% if quick_error is defined %}
                         <br>
                         <div class="alert shadow-lg">
                             <div>
@@ -156,24 +188,26 @@
                 </form>
 
                 <!-- TABLE -->
-                <div class="overflow-x-auto">
-                    <table class="table-normal rounded-xl border-2 border-secondary-content drop-shadow-lg border-dotted">
-                        <!-- head -->
-                        <thead class="bg-secondary-focus">
-                            <tr>
-                            <th class="w-3/4">Raw Rolls</th>
-                            <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody class="rounded-xl bg-base-100" >
-                            <!-- row 1 -->
-                            <tr>
-                                <td>{{ solved["raw"] }}</td>
-                                <td>{{ solved["total"] }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                {% if solved is defined %}
+                    <div class="overflow-x-auto">
+                        <table class="table-normal rounded-xl border-2 border-secondary-content drop-shadow-lg border-dotted">
+                            <!-- head -->
+                            <thead class="bg-secondary-focus">
+                                <tr>
+                                <th class="w-3/4">Raw Rolls</th>
+                                <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody class="rounded-xl bg-base-100" >
+                                <!-- row 1 -->
+                                <tr>
+                                    <td>{{ solved["raw"] }}</td>
+                                    <td>{{ solved["total"] }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endif %}
             </span>
         </div>
     </div>

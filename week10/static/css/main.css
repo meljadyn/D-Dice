@@ -1536,6 +1536,20 @@ html {
   flex-shrink: 0;
 }
 
+.stat {
+  display: inline-grid;
+  width: 100%;
+  grid-template-columns: repeat(1, 1fr);
+  -moz-column-gap: 1rem;
+       column-gap: 1rem;
+  border-color: hsl(var(--bc) / var(--tw-border-opacity));
+  --tw-border-opacity: 0.1;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .swap {
   position: relative;
   display: inline-grid;
@@ -2628,6 +2642,10 @@ body[dir="rtl"] .checkbox:checked,
   height: 1.25rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .w-6 {
   width: 1.5rem;
 }
@@ -2650,6 +2668,10 @@ body[dir="rtl"] .checkbox:checked,
 
 .w-1\/6 {
   width: 16.666667%;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .max-w-sm {
@@ -2798,6 +2820,10 @@ body[dir="rtl"] .checkbox:checked,
   padding: 0.75rem;
 }
 
+.p-0 {
+  padding: 0px;
+}
+
 .pl-10 {
   padding-left: 2.5rem;
 }
@@ -2828,6 +2854,14 @@ body[dir="rtl"] .checkbox:checked,
 
 .text-justify {
   text-align: justify;
+}
+
+.align-top {
+  vertical-align: top;
+}
+
+.align-middle {
+  vertical-align: middle;
 }
 
 .text-xl {
