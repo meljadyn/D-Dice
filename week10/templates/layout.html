@@ -5,7 +5,7 @@
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="../static/d20.ico">
         <link rel="stylesheet" href="../static/css/main.css">
-        <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script> <!--theme functionality-->
+        <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script> <!--theme functionality: credit to saadeghi https://github.com/saadeghi/theme-change-->
     </head>
     <body>
       <!-- Navbar Responsive -->
@@ -17,10 +17,10 @@
             </label>
             <!-- dropdown for mobile -->
             <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-24 text-base-content text-center">
-              {% if username is not defined %}
+              {% if username == "" %}
                 <li class="text-center"><a href="/login">Login</a></li>
               {% endif %}
-              {% if username is defined %}
+              {% if username != "" %}
                 <li class="text-center"><a href="/login">Logout</a></li>
               {% endif %}
               <li>
@@ -38,19 +38,21 @@
           <div class="pl-3">
             <a class="btn btn-secondary normal-case text-xl dark:text-gray-50" href="/">D&Dice</a>
             {% if username is defined %}
-            <div class="pl-8 text-base-content">
-                [ logged in as <span class="text-secondary-focus">{{ username }}</span> ]
-            </div>
+              {% if username != "" %}
+              <div class="pl-8 text-base-content">
+                  [ logged in as <span class="text-secondary-focus">{{ username }}</span> ]
+              </div>
+              {% endif %}
             {% endif %}
           </div>
         </div>
         <!-- Navbar for desktop -->
         <div class="navbar-center hidden lg:flex">
           <ul class="menu menu-horizontal space-x-4 flex justify-end place-content-end">
-            {% if username is not defined %}
+            {% if username == "" %}
               <li class="bg-secondary rounded-xl"><a href="/login">Login</a></li>
             {% endif %}
-            {% if username is defined %}
+            {% if username != "" %}
               <li class="bg-secondary rounded-xl"><a href="/login">Sign Out</a></li>
             {% endif %}
             <li class="bg-secondary-focus rounded-xl">

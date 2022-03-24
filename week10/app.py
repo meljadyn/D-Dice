@@ -1,5 +1,3 @@
-
-import rlcompleter
 from flask import Flask, redirect, render_template, request, session
 from flask_session import Session
 from cs50 import SQL
@@ -25,12 +23,14 @@ db = SQL("sqlite:///dndice.db")
 @app.route("/", methods=["GET", "POST"])
 def index():
     # Set variables
-    quick_error=""
     custom_error=""
     
-    # Get username
-    rows = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
-    username = rows[0]["username"]
+    # Get username if available
+    if not session.get("user_id"):
+        username = ""
+    else:
+        rows = db.execute("SELECT username FROM users WHERE id = ?", session["user_id"])
+        username = rows[0]["username"]
 
     # Load in the macro list
     macros = db.execute("SELECT id, roll_name, roll_text FROM rolls WHERE username = ?", username)
